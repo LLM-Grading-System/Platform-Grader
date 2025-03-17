@@ -1,0 +1,18 @@
+[project]
+name = "llmgrader"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "faststream[kafka]>=0.5.35",
+    "langchain>=0.3.17",
+    "langchain-mistralai>=0.2.6",
+    "miniopy-async>=1.21.1",
+    "pydantic-settings>=2.8.1",
+    "python-dotenv>=1.0.1",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9.4",
+]
