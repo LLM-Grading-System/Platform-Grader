@@ -20,8 +20,7 @@ MINIO_SECRET_KEY=R0JGpfea5RXqe6xIvptcUuvbxd2t7QsOYqk0StBO
 MINIO_BUCKET=submissions
 # Kafka
 KAFKA_BOOTSTRAP_SERVERS=localhost:29092
-KAFKA_UI_ADMIN_LOGIN=admin
-KAFKA_UI_ADMIN_PASSWORD=password
+
 # Backend
 API_HOST=localhost
 API_PORT=5000
@@ -30,5 +29,11 @@ API_PORT=5000
 ### Запуск
 
 ```bash
-uv run python -m src.app
+uv run faststream run src.app:app
+```
+
+### Сборка
+
+```bash
+docker build -t grader:latest .
 ```
