@@ -39,23 +39,23 @@ async def handle_new_submission(data: SubmissionEventSchema, s3_client: S3Client
     api_response_data = await api_response.json(encoding="utf-8")
     task_system_instructions_section = api_response_data["systemInstructions"]
     task_github_repo_url = api_response_data["githubRepoUrl"]
-    # Get actual task description
+
+    # Get actual task description from GitHub
     organization, repo_name = task_github_repo_url.split("/")[-2:]
     readme_content_url = f"https://raw.githubusercontent.com/{organization}/{repo_name}/main/README.md"
     readme_response = await http_client.get(readme_content_url)
     readme_response_content = await readme_response.text(encoding="utf-8")
+
     # Prompts
     system_prompt = "\n\n".join([task_system_instructions_section, readme_response_content])
     user_prompt = "\n\n".join([project_tests_section, project_linters_section, project_structure_section, project_code_section])
+
     # Grading
     grader = LLMGrader(llm)
     result = await grader.generate(system_prompt, user_prompt)
+
     # Sending results
     update_submission_endpoint_url = f"http://{app_settings.API_HOST}:{app_settings.API_PORT}/api/submissions/{data.submission_id}"
-    headers = {
-        'accept': 'application/json',
-        'Content-Type': 'application/json'
-    }
     data = {
       "llmGrade": result.general_grade,
       "llmFeedback": result.general_feedback,

@@ -8,6 +8,8 @@ class CriteriaNote(BaseModel):
 
 
 class CriteriaFeedback(BaseModel):
+    task: str = Field(description="Describe students task")
+    files: list[str] = Field(description="Which files you use for grading")
     criteria: list[CriteriaNote] = Field(default=[])
     general_feedback: str = Field(description="General feedback about the code according to the criteria for student")
     general_grade: str = Field(description="General grade of student code: excellent, good, ok, bad")

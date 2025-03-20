@@ -19,13 +19,11 @@ class AppSettings(BaseSettings):
     def is_dev(self) -> bool:
         return self.MODE == ApplicationMode.DEVELOPMENT
 
-    MINIO_BUCKET: str = Field(default="submissions")
-    MINIO_ROOT_USER: str = Field(default="minio")
-    MINIO_ROOT_PASSWORD: str = Field(default="password")
-    MINIO_ACCESS_KEY: str = Field(default="access_key")
-    MINIO_SECRET_KEY: str = Field(default="secret")
     MINIO_HOST: str = Field(default="localhost")
     MINIO_PORT: int = Field(default=9000)
+    MINIO_ACCESS_KEY: str = Field(default="access_key")
+    MINIO_SECRET_KEY: str = Field(default="secret")
+    MINIO_BUCKET: str = Field(default="submissions")
 
     @property
     def s3_endpoint(self) -> str:
