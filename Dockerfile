@@ -7,9 +7,10 @@ WORKDIR /app
 COPY uv.lock pyproject.toml /app/
 RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-install-project --no-dev
 
-FROM base as production
+FROM base AS production
 COPY --from=builder /app /app
 ENV PATH="/app/.venv/bin:$PATH"
 WORKDIR /app
 COPY /src /app/src
-CMD ["faststream", "run", "src.app:app"]
+EXPOSE 8000
+CMD ["granian", "--interface", "asgi", "src.app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
